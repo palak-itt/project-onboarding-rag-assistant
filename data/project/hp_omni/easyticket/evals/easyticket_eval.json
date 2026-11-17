@@ -1,0 +1,167 @@
+[
+  {
+    "id": "ET001",
+    "question": "What is EasyTicket v3, and what are its main capabilities?",
+    "expected_answer": "EasyTicket v3 is a Gradio-based self-serve portal for Databricks resource provisioning with approval routing and request-history tracking. It supports Create User, Add Existing User to Group, Create Group, and request history across My requests, Pending requests, and Approved/Denied requests, with filtering and pagination.",
+    "expected_behavior": "answer",
+    "tags": [
+      "overview",
+      "multi_fact"
+    ],
+    "source": "EasyTicket v3 - Technical Documentation, sections 1 and 4.5"
+  },
+  {
+    "id": "ET002",
+    "question": "Describe the request lifecycle from form submission to provisioning.",
+    "expected_answer": "The user selects a request type and action; inputs are normalized into a structured request context; validation checks required fields, email policy, group ownership, and approval routing; a preview is shown. The request either executes directly and is recorded as Approved, or is stored as Pending for an approver. On approval, the status becomes Approved and the ticket is executed.",
+    "expected_behavior": "answer",
+    "tags": [
+      "workflow",
+      "exact_term"
+    ],
+    "source": "Section 2.2"
+  },
+  {
+    "id": "ET003",
+    "question": "Which module is the declarative source of truth for supported actions, fields, models, and form rendering?",
+    "expected_answer": "easyticket-v3/config/operations.py, through the OPERATIONS configuration registry.",
+    "expected_behavior": "answer",
+    "tags": [
+      "module_lookup",
+      "exact_term"
+    ],
+    "source": "Section 3.2"
+  },
+  {
+    "id": "ET004",
+    "question": "What fields are included in request_context_state?",
+    "expected_answer": "action, username, data, is_approval, and approver.",
+    "expected_behavior": "answer",
+    "tags": [
+      "data_contract",
+      "exact_term"
+    ],
+    "source": "Section 5.1"
+  },
+  {
+    "id": "ET005",
+    "question": "When does a create_user request require approval, and what happens when the requester is the group owner?",
+    "expected_answer": "If the requester is the group owner, the operation executes directly and a request-history row is inserted with status Approved and approver set to the requester. If the requester is not the group owner, the preview shows an owner warning and offers Send for Approval.",
+    "expected_behavior": "answer",
+    "tags": [
+      "approval_policy",
+      "conditional"
+    ]
+  },
+  {
+    "id": "ET006",
+    "question": "What is the approval rule for add_user_to_group?",
+    "expected_answer": "It follows the same owner-based approval behavior as create_user: a group owner can execute directly; a requester who is not the group owner must send the request for approval.",
+    "expected_behavior": "answer",
+    "tags": [
+      "approval_policy",
+      "exact_term"
+    ]
+  },
+  {
+    "id": "ET007",
+    "question": "What validation rules apply to create_group?",
+    "expected_answer": "Create-group requests always require platform approval. The group name must be 1–128 characters and may contain only letters, digits, dot, underscore, and hyphen. A group owner is mandatory and must exist in Databricks workspace users.",
+    "expected_behavior": "answer",
+    "tags": [
+      "validation",
+      "multi_fact"
+    ]
+  },
+  {
+    "id": "ET008",
+    "question": "Which statuses are defined by RequestStatus, and what does normalize_status do?",
+    "expected_answer": "RequestStatus defines Pending, Approved, and Denied. normalize_status(value, default) canonicalizes status values to title case for database writes and filters.",
+    "expected_behavior": "answer",
+    "tags": [
+      "status",
+      "exact_term"
+    ]
+  },
+  {
+    "id": "ET009",
+    "question": "Which filters are available in request history, and how does pagination work?",
+    "expected_answer": "The filters are Requestor (case-insensitive contains), Action (exact match), Request status (Pending/Approved/Denied), and Ticket ID (case-insensitive contains). Pagination shows 10 entries per page, maintains separate page state for My, Pending, and Approved/Denied tabs, and resets to page 1 when filters or the tab change.",
+    "expected_behavior": "answer",
+    "tags": [
+      "history",
+      "multi_fact"
+    ]
+  },
+  {
+    "id": "ET010",
+    "question": "Which service function fetches approval-history rows where the user is either the requestor or an approver?",
+    "expected_answer": "fetch_dbx_request_history(username) in easyticket-v3/services/databricks_service.py.",
+    "expected_behavior": "answer",
+    "tags": [
+      "function_lookup",
+      "exact_term"
+    ]
+  },
+  {
+    "id": "ET011",
+    "question": "What is the exact approval table name and where is it located?",
+    "expected_answer": "sandbox_test.platform_support.easyticket_approval_requests_table.",
+    "expected_behavior": "answer",
+    "tags": [
+      "schema_lookup",
+      "exact_term"
+    ]
+  },
+  {
+    "id": "ET012",
+    "question": "How many rows are displayed per request-history page?",
+    "expected_answer": "10 rows per page.",
+    "expected_behavior": "answer",
+    "tags": [
+      "single_fact",
+      "exact_term"
+    ]
+  },
+  {
+    "id": "ET013",
+    "question": "Which Databricks job runs after an approval, and what is its job ID?",
+    "expected_answer": "The document does not specify a Databricks job or job ID. It says that approval triggers actual ticket execution, but does not identify a job.",
+    "expected_behavior": "abstain",
+    "tags": [
+      "trap",
+      "unsupported_detail"
+    ]
+  },
+  {
+    "id": "ET014",
+    "question": "What is the retry policy and timeout duration configured for Databricks API calls?",
+    "expected_answer": "The document does not specify configured retry counts or timeout durations. It lists adding retry and timeout policies around external API calls as a suggested next improvement.",
+    "expected_behavior": "abstain",
+    "tags": [
+      "trap",
+      "unsupported_detail"
+    ]
+  },
+  {
+    "id": "ET015",
+    "question": "What encryption algorithm is used to protect the JSON ticket files in Databricks storage?",
+    "expected_answer": "The document does not specify an encryption algorithm for the JSON ticket files.",
+    "expected_behavior": "abstain",
+    "tags": [
+      "trap",
+      "unsupported_detail"
+    ]
+  },
+    {
+    "id": "ET016",
+    "question": "What is EasyTicket v3, Give answer in maximum 50 words?",
+    "expected_answer": "EasyTicket v3 self-serve portal for Databricks resource provisioning.",
+    "expected_behavior": "answer",
+    "tags": [
+      "overview",
+      "instruction following"
+    ],
+    "source": "EasyTicket v3 - Technical Documentation, sections 1 and 4.5"
+  }
+]

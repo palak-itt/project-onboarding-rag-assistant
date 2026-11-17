@@ -12,5 +12,4 @@ def generate_embeddings(chunks):
         model='nomic-embed-text',
         input=chunks
     )
-    print(response)
     return response.embeddings

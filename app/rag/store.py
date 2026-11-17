@@ -29,3 +29,6 @@ def store(chunks, source="easyticket/public/README.md"):
         print(f"Total collection count is {collection.count()}")
         print_collection()
 
+def search(query, k=5, where=None):
+    r = collection.query(query_embeddings=query, n_results=k, where=where)
+    return [dict(id=i, text=d, meta=m, score=round(1-dist, 3)) for i,d,m,dist in zip(r["ids"][0], r["documents"][0], r["metadatas"][0], r["distances"][0])]
