@@ -5,3 +5,12 @@
 # But then which one, how they differ, how should one decide?
 # And I don't need to think about which tokenizer to use before embedding. Because each embedding model comes with it's own tokenizer. Why? Because each tokenizer may assign differnt token ID for differnt words, and if th e mdoel is trained using those ID's, with a differnet tokenizer it will mess up and generate incorrect results.
 
+import ollama
+
+def generate_embeddings(chunks):
+    response = ollama.embed(
+        model='nomic-embed-text',
+        input=chunks
+    )
+    print(response)
+    return response.embeddings

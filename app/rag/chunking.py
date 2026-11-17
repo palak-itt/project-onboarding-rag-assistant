@@ -6,6 +6,7 @@
 # Design decision change chunk size from 512 to 1024 after 1 st iteration. then from 1024 to 2048 fter 2nd iteration, in similar ration, increase overlap too.
 def fixed_chunks(text, size=512, overlap=100):
     step = size-overlap
-    return [text[i:i+size] for i in range(0, len(text), step) if text[i: 1+size].strip()]
+
+    return [text[i:i+size] for i in range(0, len(text), step) if text[i: i+size].strip()]
 
 
