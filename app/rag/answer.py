@@ -25,7 +25,7 @@ def rag_answer(question, embedded_q):
     """
     response = ollama.chat(
         model="llama3.2:3b",
-        messages=[{"role": "system", "content": SYSTEM},
+        messages=[
             {"role": "user", "content": ctx}
         ],
         options={"temperature": 0.2}
