@@ -1,11 +1,11 @@
-from .chunking import fixed_chunks
+from .chunking import fixed_chunks, recursive_chunks
 from .store import store
 # import PathLib
 
 file_path = "data/project/hp_omni/easyticket/public/README.md"
 
 def ingest(content):
-    chunks = fixed_chunks(content)
+    chunks = recursive_chunks(content)
     print(f"Total chunks = {len(chunks)}")
     store(chunks)
 

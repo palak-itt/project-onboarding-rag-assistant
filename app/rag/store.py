@@ -3,7 +3,7 @@ import chromadb
 from .embedding import generate_embeddings
 client = chromadb.PersistentClient(path="./chromadb")
 
-collection = client.get_or_create_collection(name="hp-omni_easyticket", metadata={"hnsw:space": "cosine"})
+collection = client.get_or_create_collection(name="hp-omni_easyticket_v1", metadata={"hnsw:space": "cosine"})
 
 def print_collection():
     data = collection.get(include=["documents", "metadatas"])
