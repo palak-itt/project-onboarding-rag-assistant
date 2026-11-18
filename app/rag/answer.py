@@ -28,6 +28,7 @@ def rag_answer(question, embedded_q):
     )
 
     return {
+        "question": question,
         "answer": response["message"]["content"],
         "hits": hits
     }
