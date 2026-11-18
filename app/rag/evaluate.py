@@ -9,7 +9,7 @@ from .embedding import generate_embeddings
 def judge(eval_obj):
     query = eval_obj["question"]
     expected_answer = eval_obj["expected_answer"]
-    expt_src = eval_obj["source"]
+    # expt_src = eval_obj["source"]
     expected_behavior = eval_obj["expected_behavior"]
     embedded_q = generate_embeddings(query)
     actual_answer = rag_answer(query, embedded_q)
